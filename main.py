@@ -1,14 +1,12 @@
 import itertools
-import nltk
-from nltk.corpus import words
 
-# Download the word list if not already done
-nltk.download('words')
+# Load words from the local dictionary file
+def load_words(file_path):
+    with open(file_path, 'r') as file:
+        valid_words = set(file.read().split())
+    return valid_words
 
-# Get the set of valid words
-valid_words = set(words.words())
-
-def find_words(letters):
+def find_words(letters, valid_words):
     # Generate all permutations of the given letters
     permutations = set(
         ''.join(p)
@@ -22,10 +20,17 @@ def find_words(letters):
     # Return sorted list of valid words
     return sorted(valid_permutations)
 
+# Path to the local dictionary file
+dictionary_file_path = 'words_alpha.txt'
+
+# Load the dictionary
+valid_words = load_words(dictionary_file_path)
+
 # Letters provided
 letters = "tabind"
 
 # Find and print valid words
-valid_words_list = find_words(letters)
+valid_words_list = find_words(letters, valid_words)
 for word in valid_words_list:
     print(word)
+
